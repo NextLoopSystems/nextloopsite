@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NextLoop Cursos</title>
+  <style>
+    :root {
+      --dark-blue: #0a192f;
+      --light-slate: #ccd6f6;
+      --slate: #8892b0;
+      --accent-blue: #64ffda;
+      --light-navy: #112240;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background-color: var(--dark-blue);
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* --- HEADER E NAVEGAÇÃO --- */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 10px;
+      background-color: rgba(10, 25, 47, 0.85);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      height: 55px;
+      border-radius: 8px;
+    }
+    
+    #menu-paginas-desktop {
+      display: none; /* Começa escondido, aparece em telas maiores */
+      gap: 0.5rem;
+    }
+
+    .menu-icon {
+      cursor: pointer;
+      display: block; /* Visível em telas menores */
+    }
+
+    /* --- MENU MOBILE --- */
+    #menu-mobile {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 50%;
+      max-width: 280px;
+      height: 100vh;
+      background: var(--light-navy);
+      padding-top: 80px;
+      box-shadow: -10px 0px 30px -15px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+    
+    #menu-mobile h3 {
+        color: var(--accent-blue);
+        padding: 15px 0;
+        border-bottom: 1px solid var(--slate);
+        margin: 0 20px 10px 20px;
+    }
+
+    #close-icon {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+      cursor: pointer;
+    }
+    
+    /* Estilo dos botões de categoria (desktop e mobile) */
+    #menu-paginas-desktop button,
+    #menu-paginas-mobile a {
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1.5px solid var(--accent-blue);
+      color: var(--accent-blue);
+      padding: 8px 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      display: block;
+    }
+    
+    #menu-paginas-mobile a {
+        margin: 10px 20px;
+    }
+
+    #menu-paginas-desktop button:hover,
+    #menu-paginas-mobile a:hover {
+      background-color: rgba(100, 255, 218, 0.1);
+    }
+    
+    #menu-paginas-desktop button.active,
+    #menu-paginas-mobile a.active {
+      background-color: var(--accent-blue);
+      color: var(--dark-blue);
+      font-weight: bold;
+    }
+
+    /* --- CONTEÚDO PRINCIPAL --- */
+    main {
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    #filtro-container {
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 150px; /* Espaço para o header fixo */
+      padding-bottom: 2rem;
+    }
+
+    #filtro-nome {
+      width: 90%;
+      max-width: 500px;
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--slate);
+      background-color: var(--light-navy);
+      color: var(--light-slate);
+    }
+    #filtro-nome:focus {
+        outline: none;
+        border-color: var(--accent-blue);
+        box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.2);
+    }
+
+    #cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 0 2rem 2rem 2rem;
+    }
+
+    .card {
+      background-color: var(--light-navy);
+      padding: 1.5rem;
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 30px -15px rgba(0,0,0,0.7);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 20px 30px -15px rgba(0,0,0,0.7);
+    }
+
+    .card h3 {
+      color: var(--light-slate);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .card a {
+      background-color: transparent;
+      border: 1px solid var(--accent-blue);
+      color: var(--accent-blue);
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    .card a:hover {
+      background-color: var(--accent-blue);
+      color: var(--dark-blue);
+    }
+    
+    /* --- MEDIA QUERIES --- */
+    @media (min-width: 768px) {
+      .menu-icon {
+        display: none;
+      }
+      #menu-paginas-desktop {
+        display: flex;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <img src="LogoNLStextoBranco.png" alt="Logo NextLoop" class="logo" />
+    <nav id="menu-paginas-desktop">
+      <button onclick="history.back()">Voltar</button>
+    </nav>
+    <div class="menu-icon" onclick="toggleMenu()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" style="color: var(--accent-blue);">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+      </svg>
+    </div>
+  </header>
+  
+  <nav id="menu-mobile">
+    <div id="close-icon" onclick="toggleMenu()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" style="color: var(--accent-blue);">
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h3>Categorias</h3>
+    <div id="menu-paginas-mobile"></div>
+  </nav>
+
+  <main>
+    <div id="filtro-container">
+      <input type="text" id="filtro-nome" placeholder="Filtrar curso por nome..." />
+    </div>
+    <div id="cards-container">
+      </div>
+  </main>
+
+  <script>
+    let dadosJson = {};
+    const menuDesktop = document.getElementById("menu-paginas-desktop");
+    const menuMobile = document.getElementById("menu-paginas-mobile");
+    const container = document.getElementById("cards-container");
+    const filtroInput = document.getElementById("filtro-nome");
+    let abaAtiva = null;
+    let cursosAtuais = []; 
+
+    // --- Lógica de busca e exibição dos cursos ---
+    fetch("planilha_completa.json")
+      .then(res => res.text())
+      .then(text => JSON.parse(text.replace(/\bNaN\b/g, 'null')))
+      .then(data => {
+        dadosJson = data;
+        const paginas = Object.keys(data);
+        montarMenu(paginas);
+        abaAtiva = paginas[0];
+        mostrarPagina(abaAtiva);
+        marcarBotaoAtivo(abaAtiva);
+      })
+      .catch(e => {
+        container.innerHTML = "<p style='color:red; text-align:center;'>Erro ao carregar os dados.</p>";
+        console.error(e);
+      });
+
+    function montarMenu(paginas) {
+      paginas.forEach(nome => {
+        // Cria botão para o menu do Desktop
+        const btnDesktop = document.createElement("button");
+        btnDesktop.textContent = nome;
+        btnDesktop.onclick = () => handleMenuClick(nome);
+        menuDesktop.appendChild(btnDesktop);
+
+        // Cria link para o menu Mobile
+        const linkMobile = document.createElement("a");
+        linkMobile.textContent = nome;
+        linkMobile.href = "#";
+        linkMobile.onclick = (e) => {
+            e.preventDefault();
+            handleMenuClick(nome);
+            toggleMenu(); // Fecha o menu ao clicar
+        };
+        menuMobile.appendChild(linkMobile);
+      });
+    }
+
+    function handleMenuClick(nome) {
+      if (nome !== abaAtiva) {
+        abaAtiva = nome;
+        filtroInput.value = "";
+        mostrarPagina(nome);
+        marcarBotaoAtivo(nome);
+      }
+    }
+
+    function mostrarPagina(nomePagina) {
+      container.innerHTML = "";
+      cursosAtuais = dadosJson[nomePagina] || [];
+      renderizarCards(cursosAtuais);
+    }
+
+    function renderizarCards(lista) {
+      container.innerHTML = "";
+      if (lista.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>Nenhum curso encontrado com este filtro.</p>";
+        return;
+      }
+      lista.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${item.Nome}</h3>
+          <a href="${item.Link}" target="_blank" rel="noopener noreferrer">Acessar Curso</a>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    filtroInput.addEventListener("input", () => {
+      const texto = filtroInput.value.toLowerCase();
+      const filtrados = cursosAtuais.filter(curso => curso.Nome.toLowerCase().includes(texto));
+      renderizarCards(filtrados);
+    });
+
+    function marcarBotaoAtivo(nome) {
+      const elementosDoMenu = document.querySelectorAll("#menu-paginas-desktop button, #menu-paginas-mobile a");
+      elementosDoMenu.forEach(el => {
+        el.classList.toggle("active", el.textContent === nome);
+      });
+    }
+
+    // --- Lógica do Menu Mobile ---
+    function toggleMenu() {
+      const menu = document.getElementById("menu-mobile");
+      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
+</body>
+</html>
