@@ -46,7 +46,7 @@
     <div><img src="Logo_GwJpg.jpg" alt="Logo" style="border-radius:50px; height:40px;" /></div>
     <h1>Adicionar Produto</h1>
     <div>
-      <button onclick="history.back()" class="btn btn-sm btn-outline-light">Voltar</button>
+      <button onclick="window.location.href='menu.html'" class="btn btn-sm btn-outline-light">Menu</button>
     </div>
   </header>
 
@@ -101,7 +101,7 @@
 
         console.log("Enviando dados para o Apps Script:", dados);
 
-        fetch("https://script.google.com/macros/s/AKfycbyUnfDG671xCJwg2Eyqv9ykOeKqWoaMrDDoo4YySOL4y8Q6LpB2Gho6P-nUhsyQBSI/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbx5zXVmS0TIdmOEBvUy3gGvV9tHP5_ASgF4DBs2t4WcBSqm10LnaANj__KeP7Gl4g/exec", {
           method: "POST",
           mode: "no-cors",
           headers: {
