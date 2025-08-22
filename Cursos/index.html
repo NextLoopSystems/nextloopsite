@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NextLoop Cursos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <style>
     :root {
       --dark-blue: #0a192f;
@@ -11,6 +12,8 @@
       --slate: #8892b0;
       --accent-blue: #64ffda;
       --light-navy: #112240;
+      --navy-shadow: rgba(2,12,27,0.7);
+      --favorite-yellow: #ffc107;
     }
 
     * {
@@ -20,11 +23,16 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
         Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
       background-color: var(--dark-blue);
       color: var(--slate);
       line-height: 1.6;
+      transition: background-color 0.3s ease;
+    }
+    
+    body.menu-open {
+        overflow: hidden;
     }
 
     /* --- HEADER E NAVEGAÇÃO --- */
@@ -32,256 +40,294 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 10px;
+      padding: 15px 30px;
       background-color: rgba(10, 25, 47, 0.85);
       backdrop-filter: blur(10px);
       position: fixed;
       width: 100%;
       top: 0;
-      z-index: 10;
+      z-index: 1000;
     }
 
     .logo {
-      height: 55px;
+      height: 50px;
       border-radius: 8px;
     }
     
     #menu-paginas-desktop {
-      display: none; /* Começa escondido, aparece em telas maiores */
-      gap: 0.5rem;
+      display: none;
+      gap: 0.75rem;
     }
 
     .menu-icon {
       cursor: pointer;
-      display: block; /* Visível em telas menores */
+      display: block;
+      z-index: 1002;
     }
 
     /* --- MENU MOBILE --- */
-    #menu-mobile {
-      display: none;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 50%;
-      max-width: 280px;
-      height: 100vh;
-      background: var(--light-navy);
-      padding-top: 80px;
-      box-shadow: -10px 0px 30px -15px rgba(0,0,0,0.7);
-      text-align: center;
+    #menu-mobile-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background-color: rgba(0,0,0,0.5); opacity: 0; pointer-events: none;
+        transition: opacity 0.3s ease-in-out; z-index: 1000;
     }
+    body.menu-open #menu-mobile-overlay { opacity: 1; pointer-events: auto; }
+
+    #menu-mobile {
+      display: flex; flex-direction: column; position: fixed;
+      top: 0; right: 0; width: clamp(250px, 60%, 300px); height: 100vh;
+      background: var(--light-navy); padding-top: 100px;
+      box-shadow: -10px 0px 30px -15px var(--navy-shadow); text-align: center;
+      transform: translateX(100%); transition: transform 0.3s ease-in-out;
+      z-index: 1001;
+    }
+    body.menu-open #menu-mobile { transform: translateX(0); }
     
     #menu-mobile h3 {
-        color: var(--accent-blue);
-        padding: 15px 0;
-        border-bottom: 1px solid var(--slate);
-        margin: 0 20px 10px 20px;
+      color: var(--accent-blue); padding-bottom: 10px; border-bottom: 1px solid #1d2d4d;
+      margin: 0 25px 15px 25px; font-size: 1.1rem; font-weight: 500;
     }
 
-    #close-icon {
-      position: absolute;
-      top: 25px;
-      right: 30px;
-      cursor: pointer;
-    }
+    #close-icon { position: absolute; top: 25px; right: 30px; cursor: pointer; }
     
     /* Estilo dos botões de categoria (desktop e mobile) */
-    #menu-paginas-desktop button,
-    #menu-paginas-mobile a {
-      background-color: transparent;
-      border: none;
-      border-radius: 0;
-      border-bottom: 1.5px solid var(--accent-blue);
-      color: var(--accent-blue);
-      padding: 8px 5px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-      display: block;
+    #menu-paginas-desktop button, #menu-paginas-mobile a {
+      background-color: transparent; border: 1px solid var(--accent-blue);
+      color: var(--accent-blue); border-radius: 20px; padding: 8px 18px;
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+      text-decoration: none; transition: all 0.25s ease; display: block;
     }
     
-    #menu-paginas-mobile a {
-        margin: 10px 20px;
-    }
+    #menu-paginas-mobile a { margin: 8px 25px; padding: 12px; }
 
-    #menu-paginas-desktop button:hover,
-    #menu-paginas-mobile a:hover {
-      background-color: rgba(100, 255, 218, 0.1);
+    #menu-paginas-desktop button:hover, #menu-paginas-mobile a:hover {
+      background-color: rgba(100, 255, 218, 0.1); transform: translateY(-2px);
     }
     
-    #menu-paginas-desktop button.active,
-    #menu-paginas-mobile a.active {
-      background-color: var(--accent-blue);
-      color: var(--dark-blue);
-      font-weight: bold;
+    #menu-paginas-desktop button.active, #menu-paginas-mobile a.active {
+      background-color: var(--accent-blue); color: var(--dark-blue);
+      font-weight: 700; box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
     }
 
     /* --- CONTEÚDO PRINCIPAL --- */
-    main {
-      padding: 0 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    main { padding: 0 20px; max-width: 1200px; margin: 0 auto; }
 
     #filtro-container {
-      margin: 0 auto;
-      text-align: center;
-      padding-top: 150px; /* Espaço para o header fixo */
-      padding-bottom: 2rem;
+      padding-top: 130px;
+      padding-bottom: 3rem;
+    }
+
+    .search-wrapper {
+        position: relative;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%; /* CORRIGIDO */
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+        color: var(--slate);
+        pointer-events: none;
     }
 
     #filtro-nome {
-      width: 90%;
-      max-width: 500px;
-      padding: 0.8rem 1rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: 1px solid var(--slate);
-      background-color: var(--light-navy);
-      color: var(--light-slate);
+      width: 100%; padding: 0.9rem 1rem 0.9rem 3rem; font-size: 1rem;
+      border-radius: 8px; border: 1px solid #233554;
+      background-color: var(--light-navy); color: var(--light-slate);
+      transition: all 0.25s ease;
     }
+    #filtro-nome::placeholder { color: var(--slate); }
     #filtro-nome:focus {
-        outline: none;
-        border-color: var(--accent-blue);
-        box-shadow: 0 0 0 3px rgba(100, 255, 218, 0.2);
+      outline: none; border-color: var(--accent-blue);
+      box-shadow: 0 0 0 4px rgba(100, 255, 218, 0.1);
     }
 
     #cards-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 0 2rem 2rem 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem; padding-bottom: 4rem;
     }
 
     .card {
-      background-color: var(--light-navy);
-      padding: 1.5rem;
-      border-radius: 8px;
+      background-color: var(--light-navy); border-radius: 8px;
+      text-align: left; display: flex; flex-direction: column;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 10px 30px -15px rgba(0,0,0,0.7);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      overflow: hidden; border-top: 3px solid var(--accent-blue);
+      position: relative;
     }
 
     .card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 20px 30px -15px rgba(0,0,0,0.7);
-    }
-
-    .card h3 {
-      color: var(--light-slate);
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .card a {
-      background-color: transparent;
-      border: 1px solid var(--accent-blue);
-      color: var(--accent-blue);
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 5px;
-      text-decoration: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      margin-top: 1rem;
-    }
-
-    .card a:hover {
-      background-color: var(--accent-blue);
-      color: var(--dark-blue);
+      transform: translateY(-8px); box-shadow: 0 20px 40px -15px var(--navy-shadow);
     }
     
-    /* --- MEDIA QUERIES --- */
-    @media (min-width: 768px) {
-      .menu-icon {
-        display: none;
-      }
-      #menu-paginas-desktop {
-        display: flex;
-      }
+    .favorite-toggle {
+        position: absolute; top: 15px; right: 15px; font-size: 1.5rem;
+        cursor: pointer; color: var(--slate);
+        transition: color 0.2s ease, transform 0.2s ease;
     }
+    .favorite-toggle:hover { transform: scale(1.2); }
+    .favorite-toggle.bi-star-fill { color: var(--favorite-yellow); }
 
+    .card-content {
+      padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;
+    }
+    
+    .card-icon { color: var(--accent-blue); margin-bottom: 1rem; }
+    .card h3 {
+      color: var(--light-slate); font-size: 1.25rem; margin-bottom: 0.75rem;
+      padding-right: 30px;
+    }
+    .card p {
+      font-size: 0.95rem; line-height: 1.5; flex-grow: 1; margin-bottom: 1.5rem;
+    }
+    .card a {
+      display: inline-block; background-color: transparent;
+      border: 1px solid var(--accent-blue); color: var(--accent-blue);
+      padding: 10px 20px; font-size: 0.9rem; font-weight: 500;
+      border-radius: 5px; text-decoration: none; text-align: center;
+      cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease;
+      margin-top: auto;
+    }
+    .card a:hover { background-color: rgba(100, 255, 218, 0.1); }
+    
+    @media (min-width: 768px) {
+      .menu-icon, #close-icon { display: none; }
+      #menu-paginas-desktop { display: flex; }
+    }
   </style>
 </head>
 <body>
+  <div id="menu-mobile-overlay" onclick="toggleMenu()"></div>
   <header>
     <img src="LogoNLStextoBranco.png" alt="Logo NextLoop" class="logo" />
-    <nav id="menu-paginas-desktop">
-      <button onclick="history.back()">Voltar</button>
-    </nav>
+    <nav id="menu-paginas-desktop"></nav>
     <div class="menu-icon" onclick="toggleMenu()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" style="color: var(--accent-blue);">
-        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" style="color: var(--accent-blue);"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
     </div>
   </header>
   
   <nav id="menu-mobile">
-    <div id="close-icon" onclick="toggleMenu()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" style="color: var(--accent-blue);">
-        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-      </svg>
-    </div>
+    <div id="close-icon" onclick="toggleMenu()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16" style="color: var(--accent-blue);"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></div>
     <h3>Categorias</h3>
     <div id="menu-paginas-mobile"></div>
   </nav>
 
   <main>
     <div id="filtro-container">
-      <input type="text" id="filtro-nome" placeholder="Filtrar curso por nome..." />
-    </div>
-    <div id="cards-container">
+      <div class="search-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="filtro-nome" placeholder="Filtrar curso por nome..." />
       </div>
+    </div>
+    <div id="cards-container"></div>
   </main>
 
   <script>
     let dadosJson = {};
+    let abaAtiva = null;
+    let cursosAtuais = [];
+    let favorites = [];
+
     const menuDesktop = document.getElementById("menu-paginas-desktop");
     const menuMobile = document.getElementById("menu-paginas-mobile");
     const container = document.getElementById("cards-container");
     const filtroInput = document.getElementById("filtro-nome");
-    let abaAtiva = null;
-    let cursosAtuais = []; 
+    
+    function loadFavorites() {
+        const storedFavorites = localStorage.getItem('nextloopCursosFavoritos');
+        if (storedFavorites) favorites = JSON.parse(storedFavorites);
+    }
 
-    // --- Lógica de busca e exibição dos cursos ---
-    fetch("planilha_completa.json")
-      .then(res => res.text())
-      .then(text => JSON.parse(text.replace(/\bNaN\b/g, 'null')))
-      .then(data => {
-        dadosJson = data;
-        const paginas = Object.keys(data);
-        montarMenu(paginas);
-        abaAtiva = paginas[0];
-        mostrarPagina(abaAtiva);
-        marcarBotaoAtivo(abaAtiva);
-      })
-      .catch(e => {
-        container.innerHTML = "<p style='color:red; text-align:center;'>Erro ao carregar os dados.</p>";
-        console.error(e);
-      });
+    function saveFavorites() {
+        localStorage.setItem('nextloopCursosFavoritos', JSON.stringify(favorites));
+    }
+
+    function generateCourseId(item) {
+        return btoa(unescape(encodeURIComponent(item.Nome + item.Link)));
+    }
+
+    function toggleFavorite(courseId) {
+        const favoriteIndex = favorites.indexOf(courseId);
+        if (favoriteIndex > -1) {
+            favorites.splice(favoriteIndex, 1);
+        } else {
+            favorites.push(courseId);
+        }
+        saveFavorites();
+        
+        if (abaAtiva === 'Favoritos') {
+            mostrarPagina('Favoritos');
+            filtrarCursosAtuais(); // Re-aplica o filtro de texto se houver
+        } else {
+            const star = document.querySelector(`.card[data-id="${courseId}"] .favorite-toggle`);
+            if (star) {
+                star.classList.toggle('bi-star');
+                star.classList.toggle('bi-star-fill');
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadFavorites();
+        fetch("planilha_completa.json")
+          .then(res => res.text())
+          .then(text => JSON.parse(text.replace(/\bNaN\b/g, 'null')))
+          .then(data => {
+            dadosJson = data;
+            const paginas = Object.keys(data);
+            const defaultPage = paginas.length > 0 ? paginas[0] : null; // Define a primeira categoria como padrão
+
+            const menuItems = ['Favoritos', ...paginas];
+            
+            criarBotaoVoltar();
+            montarMenu(menuItems);
+
+            // CORRIGIDO: Inicia na primeira categoria de cursos, não em favoritos
+            if (defaultPage) {
+                abaAtiva = defaultPage;
+                mostrarPagina(abaAtiva);
+                marcarBotaoAtivo(abaAtiva);
+            }
+          })
+          .catch(e => {
+            container.innerHTML = "<p style='color:red; text-align:center;'>Erro ao carregar os dados.</p>";
+            console.error(e);
+          });
+    });
+
+    function criarBotaoVoltar() {
+        const btnVoltarDesktop = document.createElement("button");
+        btnVoltarDesktop.textContent = "Voltar";
+        btnVoltarDesktop.onclick = () => history.back();
+        menuDesktop.appendChild(btnVoltarDesktop);
+
+        const linkVoltarMobile = document.createElement("a");
+        linkVoltarMobile.textContent = "Voltar";
+        linkVoltarMobile.href = "#";
+        linkVoltarMobile.onclick = (e) => { e.preventDefault(); history.back(); };
+        menuMobile.appendChild(linkVoltarMobile);
+    }
 
     function montarMenu(paginas) {
-      paginas.forEach(nome => {
-        // Cria botão para o menu do Desktop
+      paginas.forEach((nome, index) => {
+        if (nome === 'Favoritos' && paginas.length > 1) {
+            const hr = document.createElement('hr');
+            hr.style.margin = "0 25px"; hr.style.border = "1px solid #1d2d4d";
+            menuMobile.appendChild(hr);
+        }
+
         const btnDesktop = document.createElement("button");
         btnDesktop.textContent = nome;
         btnDesktop.onclick = () => handleMenuClick(nome);
         menuDesktop.appendChild(btnDesktop);
 
-        // Cria link para o menu Mobile
         const linkMobile = document.createElement("a");
         linkMobile.textContent = nome;
         linkMobile.href = "#";
-        linkMobile.onclick = (e) => {
-            e.preventDefault();
-            handleMenuClick(nome);
-            toggleMenu(); // Fecha o menu ao clicar
-        };
+        linkMobile.onclick = (e) => { e.preventDefault(); handleMenuClick(nome); toggleMenu(); };
         menuMobile.appendChild(linkMobile);
       });
     }
@@ -296,46 +342,81 @@
     }
 
     function mostrarPagina(nomePagina) {
-      container.innerHTML = "";
-      cursosAtuais = dadosJson[nomePagina] || [];
-      renderizarCards(cursosAtuais);
+        if (nomePagina === 'Favoritos') {
+            const uniqueCourses = new Map();
+            // CORRIGIDO: Garante que cada curso seja adicionado apenas uma vez
+            for (const page in dadosJson) {
+                dadosJson[page].forEach(course => {
+                    const courseId = generateCourseId(course);
+                    if (!uniqueCourses.has(courseId)) {
+                        uniqueCourses.set(courseId, course);
+                    }
+                });
+            }
+            const todosOsCursosUnicos = Array.from(uniqueCourses.values());
+            cursosAtuais = todosOsCursosUnicos.filter(curso => favorites.includes(generateCourseId(curso)));
+        } else {
+            cursosAtuais = dadosJson[nomePagina] || [];
+        }
+        renderizarCards(cursosAtuais);
     }
 
     function renderizarCards(lista) {
       container.innerHTML = "";
       if (lista.length === 0) {
-        container.innerHTML = "<p style='text-align:center;'>Nenhum curso encontrado com este filtro.</p>";
+        let msg = abaAtiva === 'Favoritos' 
+            ? "Você ainda não favoritou nenhum curso. Clique na estrela ☆ de um curso para salvá-lo aqui." 
+            : "Nenhum curso encontrado com este filtro.";
+        container.innerHTML = `<p style='text-align:center;'>${msg}</p>`;
         return;
       }
+
       lista.forEach(item => {
+        const courseId = generateCourseId(item);
+        const isFavorite = favorites.includes(courseId);
+        const starClass = isFavorite ? 'bi-star-fill' : 'bi-star';
+
         const card = document.createElement("div");
         card.className = "card";
+        card.dataset.id = courseId;
+
         card.innerHTML = `
-          <h3>${item.Nome}</h3>
-          <a href="${item.Link}" target="_blank" rel="noopener noreferrer">Acessar Curso</a>
+          <i class="bi ${starClass} favorite-toggle" onclick="event.stopPropagation(); toggleFavorite('${courseId}')"></i>
+          <div class="card-content">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z"/><path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1H7a.5.5 0 0 1-.5-.5zM8 15A6 6 0 1 0 8 3a6 6 0 0 0 0 12zm0 1A7 7 0 1 1 8 2a7 7 0 0 1 0 14z"/></svg>
+            </div>
+            <h3>${item.Nome}</h3>
+            <p>Este curso aborda os fundamentos essenciais e técnicas avançadas para você dominar o assunto.</p>
+            <a href="${item.Link}" target="_blank" rel="noopener noreferrer">Acessar Curso</a>
+          </div>
         `;
         container.appendChild(card);
       });
     }
 
-    filtroInput.addEventListener("input", () => {
-      const texto = filtroInput.value.toLowerCase();
-      const filtrados = cursosAtuais.filter(curso => curso.Nome.toLowerCase().includes(texto));
-      renderizarCards(filtrados);
-    });
+    function filtrarCursosAtuais() {
+        const texto = filtroInput.value.toLowerCase();
+        if(!texto) {
+            renderizarCards(cursosAtuais);
+            return;
+        }
+        const filtrados = cursosAtuais.filter(curso => curso.Nome.toLowerCase().includes(texto));
+        renderizarCards(filtrados);
+    }
+
+    filtroInput.addEventListener("input", filtrarCursosAtuais);
 
     function marcarBotaoAtivo(nome) {
       const elementosDoMenu = document.querySelectorAll("#menu-paginas-desktop button, #menu-paginas-mobile a");
       elementosDoMenu.forEach(el => {
-        el.classList.toggle("active", el.textContent === nome);
+        if (el.textContent !== "Voltar") {
+          el.classList.toggle("active", el.textContent === nome);
+        }
       });
     }
 
-    // --- Lógica do Menu Mobile ---
-    function toggleMenu() {
-      const menu = document.getElementById("menu-mobile");
-      menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-    }
+    function toggleMenu() { document.body.classList.toggle("menu-open"); }
   </script>
 </body>
 </html>
