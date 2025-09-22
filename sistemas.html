@@ -1,204 +1,249 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sistemas - NextLoop Systems</title>
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistemas - NextLoop Systems</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <style>
-    /* --- ESTILOS GERAIS (copiados do seu site) --- */
-    :root {
-      --dark-blue: #0a192f;
-      --light-slate: #ccd6f6;
-      --slate: #8892b0;
-      --accent-blue: #64ffda;
-      --light-navy: #112240;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      background-color: var(--dark-blue);
-      color: var(--slate);
-      line-height: 1.6;
-    }
-    header { display: flex; align-items: center; justify-content: space-between; padding: 15px 10px; background-color: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 10; transition: top 0.3s; }
-    .logo { height: 55px; border-radius: 8px; }
-    .nav-desktop { display: none; }
-    .nav-desktop a { color: var(--light-slate); text-decoration: none; margin: 0 15px; font-size: 1rem; transition: color 0.3s ease; }
-    .nav-desktop a:hover { color: var(--accent-blue); }
-    .menu-icon { cursor: pointer; display: block; }
-    #menu-mobile { display: none; flex-direction: column; position: fixed; top: 0; right: 0; width: 40%; max-width: 280px; height: 100vh; background: var(--light-navy); padding: 85px 20px 20px 20px; box-shadow: -10px 0px 30px -15px rgba(0,0,0,0.7); }
-    #menu-mobile a { color: var(--light-slate); text-decoration: none; font-size: 1.2rem; padding: 15px 0; text-align: center; transition: color 0.3s ease; }
-    #menu-mobile a:hover { color: var(--accent-blue); }
-    #close-icon { position: absolute; top: 25px; right: 30px; cursor: pointer; }
-    main { padding: 120px 20px 20px; max-width: 1000px; margin: 0 auto; }
-    footer { text-align: center; padding: 40px 20px; font-family: monospace; color: var(--slate); }
-    .social-links a { color: var(--slate); margin: 0 10px; transition: color 0.3s ease; }
-    .social-links a:hover { color: var(--accent-blue); }
-    @media (min-width: 768px) { .menu-icon { display: none; } .nav-desktop { display: flex; } }
+    <style>
+        /* --- ESTILOS GERAIS (copiados do seu site) --- */
+        :root {
+            --dark-blue: #0a192f;
+            --light-slate: #ccd6f6;
+            --slate: #8892b0;
+            --accent-blue: #64ffda;
+            --light-navy: #112240;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+                Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background-color: var(--dark-blue);
+            color: var(--slate);
+            line-height: 1.6;
+        }
+        header { display: flex; align-items: center; justify-content: space-between; padding: 15px 10px; background-color: rgba(10, 25, 47, 0.85); backdrop-filter: blur(10px); position: fixed; width: 100%; top: 0; z-index: 10; transition: top 0.3s; }
+        .logo { height: 55px; border-radius: 8px; }
+        .nav-desktop { display: none; }
+        .nav-desktop a { color: var(--light-slate); text-decoration: none; margin: 0 15px; font-size: 1rem; transition: color 0.3s ease; }
+        .nav-desktop a:hover { color: var(--accent-blue); }
+        .menu-icon { cursor: pointer; display: block; }
+        #menu-mobile { display: none; flex-direction: column; position: fixed; top: 0; right: 0; width: 40%; max-width: 280px; height: 100vh; background: var(--light-navy); padding: 85px 20px 20px 20px; box-shadow: -10px 0px 30px -15px rgba(0,0,0,0.7); }
+        #menu-mobile a { color: var(--light-slate); text-decoration: none; font-size: 1.2rem; padding: 15px 0; text-align: center; transition: color 0.3s ease; }
+        #menu-mobile a:hover { color: var(--accent-blue); }
+        #close-icon { position: absolute; top: 25px; right: 30px; cursor: pointer; }
+        main { padding: 120px 20px 20px; max-width: 1000px; margin: 0 auto; }
+        footer { text-align: center; padding: 40px 20px; font-family: monospace; color: var(--slate); }
+        .social-links a { color: var(--slate); margin: 0 10px; transition: color 0.3s ease; }
+        .social-links a:hover { color: var(--accent-blue); }
+        @media (min-width: 768px) { .menu-icon { display: none; } .nav-desktop { display: flex; } }
 
-    /* --- ESTILOS NOVOS PARA O 'POST' --- */
-    .post-container {
-        background-color: var(--light-navy);
-        border: 1px solid #233554;
-        border-radius: 8px;
-        max-width: 600px;
-        margin: 40px auto; /* Centraliza o post */
-        overflow: hidden; /* Garante que o carrossel não vaze */
-    }
-    .post-header {
-        display: flex;
-        align-items: center;
-        padding: 12px 15px;
-    }
-    .post-profile-pic {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 12px;
-    }
-    .post-username {
-        color: var(--light-slate);
-        font-weight: 600;
-        margin-right: 5px;
-    }
-    .verified-badge {
-        color: #0d6efd; /* Cor azul padrão do Bootstrap */
-        font-size: 16px; /* Ajusta o tamanho do ícone */
-    }
-    .post-content {
-        /* O carrossel do bootstrap já é responsivo */
-    }
-    .post-footer {
-        padding: 15px;
-    }
-    .post-footer p {
-        margin-bottom: 20px;
-        font-size: 0.95rem;
-    }
-    .cta-button {
-        background-color: transparent;
-        border: 1px solid var(--accent-blue);
-        color: var(--accent-blue);
-        padding: 10px 20px;
-        font-size: 1rem;
-        border-radius: 5px;
-        text-decoration: none;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        display: inline-block; /* Para o padding funcionar corretamente */
-    }
-    .cta-button:hover {
-        background-color: rgba(100, 255, 218, 0.1);
-        color: var(--accent-blue); /* Garante que a cor do texto não mude */
-    }
-    /* Ajuste para o carrossel do bootstrap no tema escuro */
-    .carousel {
-        border-top: 1px solid #233554;
-        border-bottom: 1px solid #233554;
-    }
-  </style>
+        /* --- ESTILOS NOVOS PARA O 'POST' --- */
+        .post-container {
+            background-color: var(--light-navy);
+            border: 1px solid #233554;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: 40px auto; /* Centraliza o post */
+            overflow: hidden; /* Garante que o carrossel não vaze */
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+        }
+        .post-profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        .post-username {
+            color: var(--light-slate);
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        .verified-badge {
+            color: #0d6efd; /* Cor azul padrão do Bootstrap */
+            font-size: 16px; /* Ajusta o tamanho do ícone */
+        }
+        .post-content {
+            /* O carrossel do bootstrap já é responsivo */
+        }
+        .post-footer {
+            padding: 15px;
+        }
+        .post-footer p {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .cta-button {
+            background-color: transparent;
+            border: 1px solid var(--accent-blue);
+            color: var(--accent-blue);
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            display: inline-block; /* Para o padding funcionar corretamente */
+        }
+        .cta-button:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--accent-blue); /* Garante que a cor do texto não mude */
+        }
+        /* Ajuste para o carrossel do bootstrap no tema escuro */
+        .carousel {
+            border-top: 1px solid #233554;
+            border-bottom: 1px solid #233554;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="Static/LogoNLStextoBranco.png" alt="Logo NextLoop" class="logo" />
-    <nav class="nav-desktop">
-        <a href="index.html#hero">Início</a>
-        <a href="index.html#services">Serviços</a>
-        <a href="index.html#systems">Sistemas</a>
-        <a href="Cursos/index.html">Cursos</a>
-        <a href="#">Sobre</a>
-        <a href="#">Contato</a>
+    <header>
+        <img src="Static/LogoNLStextoBranco.png" alt="Logo NextLoop" class="logo" />
+        <nav class="nav-desktop">
+            <a href="index.html#hero">Início</a>
+            <a href="index.html#services">Serviços</a>
+            <a href="sistemas.html">Sistemas</a>
+            <a href="index.html#team">Equipe</a>
+            <a href="Cursos/index.html">Cursos</a>
+            <a href="https://wa.me/5541984321729?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20mais%20infos!">Contato</a>
+        </nav>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: var(--accent-blue);">
+                <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+        </div>
+    </header>
+    
+    <nav id="menu-mobile">
+        <div id="close-icon" onclick="toggleMenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="color: var(--accent-blue);">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </div>
+        <a href="index.html#hero" onclick="toggleMenu()">Início</a>
+        <a href="index.html#services" onclick="toggleMenu()">Serviços</a>
+        <a href="sistemas.html" onclick="toggleMenu()">Sistemas</a>
+        <a href="index.html#team" onclick="toggleMenu()">Equipe</a>
+        <a href="Cursos/index.html" onclick="toggleMenu()">Cursos</a>
+        <a href="https://wa.me/5541984321729?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20mais%20infos!" onclick="toggleMenu()">Contato</a>
     </nav>
-    <div class="menu-icon" onclick="toggleMenu()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16" style="color: var(--accent-blue);">
-            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-        </svg>
-    </div>
-  </header>
-  
-  <nav id="menu-mobile">
-     <div id="close-icon" onclick="toggleMenu()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="color: var(--accent-blue);">
-            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-        </svg>
-    </div>
-    <a href="index.html#hero" onclick="toggleMenu()">Início</a>
-    <a href="index.html#services" onclick="toggleMenu()">Serviços</a>
-    <a href="sistemas.html" onclick="toggleMenu()">Sistemas</a>
-    <a href="#" onclick="toggleMenu()">Sobre</a>
-    <a href="#" onclick="toggleMenu()">Contato</a>
-  </nav>
 
-  <main>
-    <div class="post-container">
-        <div class="post-header">
-            <img src="Static/LogoNLSbranco.png" alt="Logo NextLoop" class="post-profile-pic">
-            <span class="post-username">NextLoop Systems</span>
-            <i class="bi bi-patch-check-fill verified-badge"></i>
-        </div>
-        
-        <div class="post-content">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    <main>
+        <div class="post-container">
+            <div class="post-header">
+                <img src="Static/LogoNLSbranco.png" alt="Logo NextLoop" class="post-profile-pic">
+                <span class="post-username">NextLoop Systems</span>
+                <i class="bi bi-patch-check-fill verified-badge"></i>
+            </div>
+            
+            <div class="post-content">
+                <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="Static/ImageBarbearia1.png" class="d-block w-100" alt="Imagem 1 do sistema novo">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Static/ImageBarbearia2.png" class="d-block w-100" alt="Imagem 2 do sistema novo">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Static/ImageBarbearia3.png" class="d-block w-100" alt="Imagem 3 do sistema novo">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img src="Static/ImageCursos1.png" class="d-block w-100" alt="Imagem 1 do sistema">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="Static/ImageCursos2.png" class="d-block w-100" alt="Imagem 2 do sistema">
-                  </div>
-                  <div class="carousel-item">
-                    <img src="Static/ImageCursos3.png" class="d-block w-100" alt="Imagem 3 do sistema">
-                  </div>
+            </div>
+
+            <div class="post-footer">
+                <p>
+                    <strong>Sistema GwBarber</strong><br>
+                    A solução completa para a gestão da barbearia GwBarber. Tendo o controle total de serviços, vendas, estoque, clientes e do fluxo financeiro em um sistema inteligente e centralizado. (Os dados presentes nas imagens acima são fictícios)
+                </p>
+                <a href="#" class="cta-button">Saiba Mais</a>
+            </div>
+        </div>
+
+        <div class="post-container">
+            <div class="post-header">
+                <img src="Static/LogoNLSbranco.png" alt="Logo NextLoop" class="post-profile-pic">
+                <span class="post-username">NextLoop Systems</span>
+                <i class="bi bi-patch-check-fill verified-badge"></i>
+            </div>
+            
+            <div class="post-content">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="Static/ImageCursos1.png" class="d-block w-100" alt="Imagem 1 do sistema">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Static/ImageCursos2.png" class="d-block w-100" alt="Imagem 2 do sistema">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="Static/ImageCursos3.png" class="d-block w-100" alt="Imagem 3 do sistema">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
+            </div>
+
+            <div class="post-footer">
+                <p>
+                    <strong>NextLoop Systems</strong><br>
+                    Este é o nosso site que fornece alguns cursos totalmente grátis. O site é repleto com mais de 10 mil cusros distintos, de diversas modalidades.
+                </p>
+                <a href="Cursos/index.html" class="cta-button">Acessar</a>
+            </div>
         </div>
+    </main>
 
-        <div class="post-footer">
-            <p>
-                <strong>NextLoop Systems</strong><br>
-                Este é o nosso site que fornece alguns cursos totalmente grátis!. O site é repleto com mais de 10 mil cusros distintos, de diversas modalidades e possui a opção de favoritar os cursos que mais te agradarem.
-            </p>
-            <a href="Cursos/index.html" class="cta-button">Acessar</a>
+    <footer>
+        <div class="social-links">
+            <a href="#" target="_blank" aria-label="Github"></a>
+            <a href="#" target="_blank" aria-label="LinkedIn"></a>
         </div>
-    </div>
-  </main>
+        <p style="margin-top: 15px;">&copy;2025 NextLoop Systems.</p>
+        <p>contato@nextloop.site | (41) 98432-1729 | (41) 99959-9603</p>
+    </footer>
 
-  <footer>
-    <div class="social-links">
-        <a href="#" target="_blank" aria-label="Github"></a>
-        <a href="#" target="_blank" aria-label="LinkedIn"></a>
-    </div>
-    <p style="margin-top: 15px;">&copy;2025 NextLoop Systems.</p>
-    <p>contato@nextloop.site | (41) 98432-1729 | (41) 99959-9603</p>
-  </footer>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("menu-mobile");
+            const isMenuOpen = menu.style.display === "flex";
+            menu.style.display = isMenuOpen ? "none" : "flex";
+        }
+    </script>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("menu-mobile");
-      const isMenuOpen = menu.style.display === "flex";
-      menu.style.display = isMenuOpen ? "none" : "flex";
-    }
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
